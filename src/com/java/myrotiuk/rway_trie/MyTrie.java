@@ -64,7 +64,7 @@ public class MyTrie implements Trie {
 
 	@Override
 	public boolean delete(String word) {
-		// TODO Auto-generated method stub
+		root = delete(root, word, 0);
 		return false;
 	}
 
