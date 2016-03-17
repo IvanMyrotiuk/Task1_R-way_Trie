@@ -2,8 +2,6 @@ package com.java.myrotiuk.rway_trie;
 
 public interface Trie {
 
-    // Добавляет в Trie пару слово - term, и его вес - weight.
-    // В качестве веса используйте длину слова
 	public void add(Tuple tuple);
 
     // есть ли слово в Trie
