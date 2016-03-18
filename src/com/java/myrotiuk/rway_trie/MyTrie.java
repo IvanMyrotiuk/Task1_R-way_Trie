@@ -1,5 +1,8 @@
 package com.java.myrotiuk.rway_trie;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class MyTrie implements Trie {
 
 	private static final int R = 26;
@@ -21,9 +24,10 @@ public class MyTrie implements Trie {
 			x = new Node();
 		if (d == word.length()) {
 			x.weight = weight;
-			if (x.weight == 0) {
-				n++;
-			}
+			n++;
+			// if (x.weight == 0) {
+			// n++;
+			// }
 			return x;
 		}
 		char c = word.charAt(d);
@@ -70,6 +74,7 @@ public class MyTrie implements Trie {
 		if (x != null) {
 			return false;
 		}
+		n--;
 		return true;
 	}
 
@@ -99,10 +104,10 @@ public class MyTrie implements Trie {
 		int position = getPosition(c);
 		refX = x;
 		Node tmp = delete(x.next[position], refX, word, d + 1);
-		//deleting up by trunk
+		// deleting up by trunk
 		if (tmp == null) {
-			if(d - 1 == -1){
-				return null;//delete root
+			if (d - 1 == -1) {
+				return null;// delete root
 			}
 			if (x.weight == 0) {
 				boolean canBeDeleted = true;
@@ -124,15 +129,44 @@ public class MyTrie implements Trie {
 
 	@Override
 	public Iterable<String> words() {
-		// TODO Auto-generated method stub
-		return null;
+		return keysWithPrefix("");
 	}
 
+	public Iterable<String> keysWithPrefix(String prefix) {
+		Queue<String> results = new LinkedList<String>();
+		Node x = get(root, prefix, 0);
+		collect(x, new StringBuilder(prefix), results);
+		return results;
+	}
+
+	private void collect(Node x, StringBuilder prefix, Queue<String> results) {
+        if (x == null) return;
+        if (x.weight != 0) results.offer(prefix.toString());
+        for (char c = 0; c < R; c++) {
+            prefix.append((char) (c + 97));
+            collect(x.next[c], prefix, results);
+            prefix.deleteCharAt(prefix.length() - 1);
+        }
+    }
 	@Override
 	public Iterable<String> wordsWithPrefix(String pref) {
-		// TODO Auto-generated method stub
-		return null;
+		Queue<String> results = new LinkedList<String>();
+        collect(root, new StringBuilder(), pref, results);
+        return results;
 	}
+	
+	private void collect(Node x, StringBuilder prefix, String pattern, Queue<String> results) {
+        if (x == null) return;
+        int d = prefix.length();
+        if (d == pattern.length() && x.weight != 0)
+            results.offer(prefix.toString());
+        if (d == pattern.length())
+            return;
+        char c = pattern.charAt(d);
+        prefix.append(c);
+        collect(x.next[c], prefix, pattern, results);
+        prefix.deleteCharAt(prefix.length() - 1);
+	}    
 
 	@Override
 	public int size() {
