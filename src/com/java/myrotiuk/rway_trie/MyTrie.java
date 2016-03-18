@@ -7,65 +7,119 @@ public class MyTrie implements Trie {
 	private int n;
 
 	private static class Node {
-		int value = 0;
+		int weight = 0;
 		Node[] next = new Node[R];
 	}
 
 	@Override
 	public void add(Tuple tuple) {
-		root = put(root, tuple.getTerm(), tuple.getWeight(), 0);
+		root = put(root, tuple.getWord(), tuple.getWeight(), 0);
 	}
 
-	private Node put(Node x, String term, int weight, int d) {
+	private Node put(Node x, String word, int weight, int d) {
 		if (x == null)
 			x = new Node();
-		if (d == term.length()) {
-			if (x.value == 0)
+		if (d == word.length()) {
+			x.weight = weight;
+			if (x.weight == 0) {
 				n++;
-			x.value = weight;
+			}
 			return x;
 		}
-		char c = term.charAt(d);
+		char c = word.charAt(d);
 		int position = getPosition(c);
-		x.next[position] = put(x.next[position], term, weight, d + 1);
+		x.next[position] = put(x.next[position], word, weight, d + 1);
 		return x;
 	}
 
 	@Override
 	public boolean contains(String word) {
-		return get(word) != 0;
+		Node x = get(root, word, 0);
+		if (x == null) {
+			return false;
+		}
+		return true;
 	}
 
-	private int get(String key) {
-		Node x = get(root, key, 0);
-		if (x == null)
-			return 0;
-		return x.value;
-	}
+	private Node get(Node x, String word, int d) {
 
-	private Node get(Node x, String key, int d) {
-		if (x == null)
+		if (x == null) {
 			return null;
-		if (d == key.length())
+		}
+		if (d == word.length()) {
 			return x;
-		char c = key.charAt(d);
+		}
+		char c = word.charAt(d);
 		int position = getPosition(c);
-		return get(x.next[position], key, d + 1);
+		return get(x.next[position], word, d + 1);
 	}
 
 	private int getPosition(char c) {
 		if (c >= 65 && c <= 90) {
-			return 90 - c;
+			return c - 65;
 		} else if (c >= 97 && c <= 122) {
-			return 122 - c;
+			return c - 97;
 		}
 		return -1;
 	}
 
 	@Override
 	public boolean delete(String word) {
-		root = delete(root, word, 0);
-		return false;
+		Node refRoot = root;
+		Node x = delete(root, refRoot, word, 0);
+		if (x != null) {
+			return false;
+		}
+		return true;
+	}
+
+	private Node delete(Node x, Node refX, String word, int d) {
+		if (x == null) {
+			return null;
+		}
+		if (d == word.length()) {
+			if (x.weight == 0) {
+				return null;
+			}
+			x.weight = 0;
+			boolean canBeDeleted = true;
+			for (int i = 0; i < R; i++) {
+				if (x.next[i] != null) {
+					canBeDeleted = false;
+				}
+				if (canBeDeleted == true) {
+					char c = word.charAt(d - 1);
+					int position = getPosition(c);
+					refX.next[position] = null;
+				}
+			}
+			return null;
+		}
+		char c = word.charAt(d);
+		int position = getPosition(c);
+		refX = x;
+		Node tmp = delete(x.next[position], refX, word, d + 1);
+		//deleting up by trunk
+		if (tmp == null) {
+			if(d - 1 == -1){
+				return null;//delete root
+			}
+			if (x.weight == 0) {
+				boolean canBeDeleted = true;
+				for (int i = 0; i < R; i++) {
+					if (x.next[i] != null) {
+						canBeDeleted = false;
+					}
+					if (canBeDeleted == true) {
+						c = word.charAt(d - 1);// another char
+						position = getPosition(c);// another position
+						refX.next[position] = null;
+					}
+				}
+				return null;
+			}
+		}
+		return tmp;
 	}
 
 	@Override

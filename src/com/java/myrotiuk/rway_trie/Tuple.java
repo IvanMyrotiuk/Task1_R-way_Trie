@@ -1,16 +1,16 @@
 package com.java.myrotiuk.rway_trie;
 
 public class Tuple {
-	private String term;
+	private String word;
 	private int weight;
 
-	public Tuple(String term, int weight) {
-		this.term = term;
+	public Tuple(String word, int weight) {
+		this.word = word;
 		this.weight = weight;
 	}
 
-	public String getTerm() {
-		return term;
+	public String getWord() {
+		return word;
 	}
 
 	public int getWeight() {
