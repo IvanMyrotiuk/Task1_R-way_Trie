@@ -129,10 +129,10 @@ public class MyTrie implements Trie {
 
 	@Override
 	public Iterable<String> words() {
-		return keysWithPrefix("");
+		return wordsWithPrefix("");
 	}
 
-	public Iterable<String> keysWithPrefix(String prefix) {
+	public Iterable<String> wordsWithPrefix(String prefix) {
 		Queue<String> results = new LinkedList<String>();
 		Node x = get(root, prefix, 0);
 		collect(x, new StringBuilder(prefix), results);
@@ -140,33 +140,34 @@ public class MyTrie implements Trie {
 	}
 
 	private void collect(Node x, StringBuilder prefix, Queue<String> results) {
-        if (x == null) return;
-        if (x.weight != 0) results.offer(prefix.toString());
-        for (char c = 0; c < R; c++) {
-            prefix.append((char) (c + 97));
-            collect(x.next[c], prefix, results);
-            prefix.deleteCharAt(prefix.length() - 1);
-        }
-    }
-	@Override
-	public Iterable<String> wordsWithPrefix(String pref) {
-		Queue<String> results = new LinkedList<String>();
-        collect(root, new StringBuilder(), pref, results);
-        return results;
+		if (x == null) return;
+		if (x.weight != 0) results.offer(prefix.toString());
+		for (char c = 0; c < R; c++) {
+			prefix.append((char) (c + 97));
+			collect(x.next[c], prefix, results);
+			prefix.deleteCharAt(prefix.length() - 1);
+		}
 	}
-	
-	private void collect(Node x, StringBuilder prefix, String pattern, Queue<String> results) {
-        if (x == null) return;
-        int d = prefix.length();
-        if (d == pattern.length() && x.weight != 0)
-            results.offer(prefix.toString());
-        if (d == pattern.length())
-            return;
-        char c = pattern.charAt(d);
-        prefix.append(c);
-        collect(x.next[c], prefix, pattern, results);
-        prefix.deleteCharAt(prefix.length() - 1);
-	}    
+//	@Override
+//	public Iterable<String> wordsWithPrefix(String pref) {
+//		Queue<String> results = new LinkedList<String>();
+//		collect(root, new StringBuilder(), pref, results);
+//		return results;
+//	}
+//	
+//	private void collect(Node x, StringBuilder prefix, String pattern, Queue<String> results) {
+//		if (x == null) return;
+//		int d = prefix.length();
+//		if (d == pattern.length() && x.weight != 0)
+//			results.offer(prefix.toString());
+//		if (d == pattern.length())
+//			return;
+//		char c = pattern.charAt(d);
+//		prefix.append(c);
+//		int position = getPosition(c);
+//		collect(x.next[position], prefix, pattern, results);
+//		prefix.deleteCharAt(prefix.length() - 1);
+//	}    
 
 	@Override
 	public int size() {

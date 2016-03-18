@@ -41,5 +41,9 @@ public class MyotiukMain {
 		for(String r: trie.words()){
 			System.out.println(r);
 		}
+		
+		for(String r: trie.wordsWithPrefix("a")){
+			System.out.println(r);
+		}
 	}
 }
