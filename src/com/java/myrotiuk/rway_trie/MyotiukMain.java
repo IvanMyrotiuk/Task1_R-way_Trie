@@ -34,6 +34,8 @@ public class MyotiukMain {
 		strBuilder.append(c);
 		System.out.println(strBuilder.toString());
 		
+		trie.add(new Tuple("abcde", 1));
+		trie.add(new Tuple("abcd", 1));
 		trie.add(new Tuple("abc", 1));
 		trie.add(new Tuple("ab", 1));
 		trie.add(new Tuple("a", 1));
@@ -45,5 +47,11 @@ public class MyotiukMain {
 		for(String r: trie.wordsWithPrefix("a")){
 			System.out.println(r);
 		}
+		System.out.println("Prefix matcher");
+		PrefixMatches pm = new PrefixMatches(trie);
+		for(String r : pm.wordsWithPrefix("a")){
+			System.out.println(r);
+		}
+		
 	}
 }

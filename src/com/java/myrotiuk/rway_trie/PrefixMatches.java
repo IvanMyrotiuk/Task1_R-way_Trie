@@ -1,5 +1,11 @@
 package com.java.myrotiuk.rway_trie;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import javax.print.attribute.standard.RequestingUserName;
+
 public class PrefixMatches {
 	private Trie trie;
 
@@ -12,19 +18,23 @@ public class PrefixMatches {
 		return 0;
 	}
 
+	public PrefixMatches(Trie trie){
+		this.trie = trie;
+	}
+	
 	// есть ли слово в словаре
 	public boolean contains(String word) {
-		return false;
+		return trie.contains(word);
 	}
 
 	// удаляет слово из словаря
 	public boolean delete(String word) {
-		return false;
+		return trie.delete(word);
 	}
 
 	// к-во слов в словаре
 	public int size() {
-		return 0;
+		return trie.size();
 	}
 
 	// если введенный pref длиннее или равен 2м символам, то возвращает набор
@@ -40,7 +50,7 @@ public class PrefixMatches {
 	// - при k=2 возвращаются 'abc', 'abcd', 'abce'
 	// - при k=3 возвращаются 'abc', 'abcd', 'abce', 'abcde'
 	// - при k=4 возвращаются 'abc', 'abcd', 'abce', 'abcde', 'abcdef'
-	public Iterable<String> wordsWithPrefix(String pref, int k){
+	public Iterable<String> wordsWithPrefix(String pref, int k) {
 		return null;
 	}
 
@@ -48,8 +58,57 @@ public class PrefixMatches {
 	// слов k=3 разных длин начиная с минимальной, и начинающихся с данного
 	// префикса pref.
 	public Iterable<String> wordsWithPrefix(String pref){
-		return null;
+		Queue<String> myWords = (Queue<String>)trie.wordsWithPrefix(pref);
+		return new Iterable<String>(){
+			public Iterator<String> iterator(){
+				return new Iterator<String>(){
+					int k = 3;
+					int n = 1;
+					int length_prev = myWords.peek().length();
+					public boolean hasNext(){
+						if(myWords.size() == 0){
+							return false;
+						}
+						if(n != k){
+							return true;
+						}
+						return false;
+					}
+					
+					public String next(){
+						String word = myWords.poll();
+						int length = word.length();
+						if(length != length_prev){
+							length_prev = length;
+							n++;
+						}
+						return word;
+					}
+				};
+			}
+		};
+	
+		
+//		if(pref.length() >= 2){
+//			Queue<String> results = new LinkedList<String>();
+//			Node x = get(root, prefix, 0);
+//			collect(x, new StringBuilder(prefix), results);
+//			return results;
+//		}
+//		return null;
 	}
+
+	// private void collect(Node x, StringBuilder prefix, Queue<String> results,
+	// int times, int k) {
+	// if(times == k){
+	//
+	// }
+	// if (x == null) return;
+	// if (x.weight != 0) results.offer(prefix.toString());
+	// for (char c = 0; c < R; c++) {
+	// prefix.append((char) (c + 97));
+	// collect(x.next[c], prefix, results, times + 1, k);
+	// prefix.deleteCharAt(prefix.length() - 1);
+	// }
+	// }
 }
-//http://stackoverflow.com/questions/23162559/iterable-as-a-return-type
-//http://algs4.cs.princeton.edu/52trie/
