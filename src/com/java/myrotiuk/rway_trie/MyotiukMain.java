@@ -53,5 +53,10 @@ public class MyotiukMain {
 			System.out.println(r);
 		}
 		
+		System.out.println("Iterable 2");
+		for(String r: pm.wordsWithPrefix("a", 2)){
+			System.out.println(r);
+		}
+		
 	}
 }

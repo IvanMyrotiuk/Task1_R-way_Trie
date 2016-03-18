@@ -51,24 +51,41 @@ public class PrefixMatches {
 	// - при k=3 возвращаются 'abc', 'abcd', 'abce', 'abcde'
 	// - при k=4 возвращаются 'abc', 'abcd', 'abce', 'abcde', 'abcdef'
 	public Iterable<String> wordsWithPrefix(String pref, int k) {
-		return null;
+		return getWordsWithPrefix(pref, k);
 	}
 
 	// если введенный pref длиннее или равен 2м символам, то возвращает набор
 	// слов k=3 разных длин начиная с минимальной, и начинающихся с данного
 	// префикса pref.
 	public Iterable<String> wordsWithPrefix(String pref){
+		
+		return getWordsWithPrefix(pref, 3);
+//		if(pref.length() >= 2){
+//			Queue<String> results = new LinkedList<String>();
+//			Node x = get(root, prefix, 0);
+//			collect(x, new StringBuilder(prefix), results);
+//			return results;
+//		}
+//		return null;
+	}
+	
+//////////////////////////////////////
+	
+	private Iterable<String> getWordsWithPrefix(String pref, final int kk){	
 		Queue<String> myWords = (Queue<String>)trie.wordsWithPrefix(pref);
 		return new Iterable<String>(){
 			public Iterator<String> iterator(){
 				return new Iterator<String>(){
-					int k = 3;
+					int k = kk;
 					int n = 1;
 					int length_prev = myWords.peek().length();
 					public boolean hasNext(){
 						if(myWords.size() == 0){
 							return false;
 						}
+//						if(kk == 1){
+//							return true;
+//						}
 						if(n != k){
 							return true;
 						}
@@ -81,21 +98,15 @@ public class PrefixMatches {
 						if(length != length_prev){
 							length_prev = length;
 							n++;
+							if( kk == 1){
+								k--;
+							}
 						}
 						return word;
 					}
 				};
 			}
 		};
-	
-		
-//		if(pref.length() >= 2){
-//			Queue<String> results = new LinkedList<String>();
-//			Node x = get(root, prefix, 0);
-//			collect(x, new StringBuilder(prefix), results);
-//			return results;
-//		}
-//		return null;
 	}
 
 	// private void collect(Node x, StringBuilder prefix, Queue<String> results,
