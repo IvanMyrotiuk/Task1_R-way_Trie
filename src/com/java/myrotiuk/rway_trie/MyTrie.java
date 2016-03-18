@@ -147,27 +147,7 @@ public class MyTrie implements Trie {
 			collect(x.next[c], prefix, results);
 			prefix.deleteCharAt(prefix.length() - 1);
 		}
-	}
-//	@Override
-//	public Iterable<String> wordsWithPrefix(String pref) {
-//		Queue<String> results = new LinkedList<String>();
-//		collect(root, new StringBuilder(), pref, results);
-//		return results;
-//	}
-//	
-//	private void collect(Node x, StringBuilder prefix, String pattern, Queue<String> results) {
-//		if (x == null) return;
-//		int d = prefix.length();
-//		if (d == pattern.length() && x.weight != 0)
-//			results.offer(prefix.toString());
-//		if (d == pattern.length())
-//			return;
-//		char c = pattern.charAt(d);
-//		prefix.append(c);
-//		int position = getPosition(c);
-//		collect(x.next[position], prefix, pattern, results);
-//		prefix.deleteCharAt(prefix.length() - 1);
-//	}    
+	}  
 
 	@Override
 	public int size() {
