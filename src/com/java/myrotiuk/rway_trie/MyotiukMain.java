@@ -34,10 +34,14 @@ public class MyotiukMain {
 		strBuilder.append(c);
 		System.out.println(strBuilder.toString());
 		
+		trie.add(new Tuple("abcdle", 1));
+		trie.add(new Tuple("abcdol", 1));
 		trie.add(new Tuple("abcde", 1));
-		trie.add(new Tuple("abcd", 1));
+		trie.add(new Tuple("abcdo", 1));
 		trie.add(new Tuple("abc", 1));
-		trie.add(new Tuple("ab", 1));
+		trie.add(new Tuple("abh", 1));
+		trie.add(new Tuple("abu", 1));
+		trie.add(new Tuple("abk", 1));
 		trie.add(new Tuple("a", 1));
 		System.out.println("--Iterator--");
 		for(String r: trie.words()){
@@ -49,9 +53,15 @@ public class MyotiukMain {
 		}
 		System.out.println("Prefix matcher");
 		PrefixMatches pm = new PrefixMatches(trie);
-		for(String r : pm.wordsWithPrefix("a")){
+		for(String r : pm.wordsWithPrefix("ab")){
 			System.out.println(r);
 		}
+		
+		System.out.println("Iterable 2");
+		for(String r : pm.wordsWithPrefix("ab", 4)){
+			System.out.println(r);
+		}
+		
 		
 	}
 }

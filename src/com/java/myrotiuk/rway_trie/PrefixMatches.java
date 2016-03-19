@@ -51,25 +51,52 @@ public class PrefixMatches {
 	// - при k=3 возвращаются 'abc', 'abcd', 'abce', 'abcde'
 	// - при k=4 возвращаются 'abc', 'abcd', 'abce', 'abcde', 'abcdef'
 	public Iterable<String> wordsWithPrefix(String pref, int k) {
-		return null;
+		checkLength(pref);
+		return getWordsWithPrefix(pref, k);
 	}
 
 	// если введенный pref длиннее или равен 2м символам, то возвращает набор
 	// слов k=3 разных длин начиная с минимальной, и начинающихся с данного
 	// префикса pref.
 	public Iterable<String> wordsWithPrefix(String pref){
+		checkLength(pref);
+		return getWordsWithPrefix(pref, 3);
+	}
+	
+	private void checkLength(String pref){
+		if(pref.length() < 2)
+			throw new IllegalArgumentException("Length of prefix less then 2");
+	}
+	
+	private Iterable<String> getWordsWithPrefix(String pref, final int kk){
 		Queue<String> myWords = (Queue<String>)trie.wordsWithPrefix(pref);
 		return new Iterable<String>(){
 			public Iterator<String> iterator(){
 				return new Iterator<String>(){
-					int k = 3;
+					int k = kk;
 					int n = 1;
-					int length_prev = myWords.peek().length();
+					int length_prev;
+					int triger = 1;
+					boolean stopiteration = false;
 					public boolean hasNext(){
+						if(myWords.size() != 0 && triger == 1){
+							length_prev = myWords.peek().length();
+							triger = 0;
+						}
 						if(myWords.size() == 0){
 							return false;
 						}
-						if(n != k){
+						String word = myWords.peek();
+						int length = word.length();
+						if(length != length_prev && kk == 1){
+							return false;
+						}
+						if(stopiteration){
+							return false;
+						}else if(kk == 1){
+							return true;
+						}
+						if(n != k+1){
 							return true;
 						}
 						return false;
@@ -80,6 +107,9 @@ public class PrefixMatches {
 						int length = word.length();
 						if(length != length_prev){
 							length_prev = length;
+							if(kk == 1){
+								stopiteration = true;
+							}
 							n++;
 						}
 						return word;
@@ -87,28 +117,6 @@ public class PrefixMatches {
 				};
 			}
 		};
-	
-		
-//		if(pref.length() >= 2){
-//			Queue<String> results = new LinkedList<String>();
-//			Node x = get(root, prefix, 0);
-//			collect(x, new StringBuilder(prefix), results);
-//			return results;
-//		}
-//		return null;
 	}
 
-	// private void collect(Node x, StringBuilder prefix, Queue<String> results,
-	// int times, int k) {
-	// if(times == k){
-	//
-	// }
-	// if (x == null) return;
-	// if (x.weight != 0) results.offer(prefix.toString());
-	// for (char c = 0; c < R; c++) {
-	// prefix.append((char) (c + 97));
-	// collect(x.next[c], prefix, results, times + 1, k);
-	// prefix.deleteCharAt(prefix.length() - 1);
-	// }
-	// }
 }
