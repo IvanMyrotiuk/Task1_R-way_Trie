@@ -86,6 +86,7 @@ public class PrefixMatches {
 						if(myWords.size() == 0){
 							return false;
 						}
+						
 						String word = myWords.peek();
 						int length = word.length();
 						if(length != length_prev && kk == 1){
@@ -111,6 +112,9 @@ public class PrefixMatches {
 								stopiteration = true;
 							}
 							n++;
+							if( kk == 1){
+								k--;
+							}
 						}
 						return word;
 					}
