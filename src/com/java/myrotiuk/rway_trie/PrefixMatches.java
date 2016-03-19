@@ -89,16 +89,10 @@ public class PrefixMatches {
 						
 						String word = myWords.peek();
 						int length = word.length();
-						if(length != length_prev ){//&& kk == 1){
+						if(length != length_prev){
 							length_prev = length;
-							n++;//next length
-							//return false;
+							n++;
 						}
-//						if(stopiteration){
-//							return false;
-//						}else if(kk == 1){
-//							return true;
-//						}
 						if(n != k+1){
 							return true;
 						}
@@ -107,17 +101,6 @@ public class PrefixMatches {
 					
 					public String next(){
 						String word = myWords.poll();
-//						int length = word.length();
-//						if(length != length_prev){
-//							length_prev = length;
-//							if(kk == 1){
-//								stopiteration = true;
-//							}
-//							n++;
-//							if( kk == 1){
-//								k--;
-//							}
-//						}
 						return word;
 					}
 				};

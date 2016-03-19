@@ -60,7 +60,7 @@ public class MyotiukMain {
 		}
 		
 		System.out.println("Iterable 2");
-		for(String r : pm.wordsWithPrefix("ab", 5)){
+		for(String r : pm.wordsWithPrefix("ab", 1)){
 			System.out.println(r);
 		}
 		
