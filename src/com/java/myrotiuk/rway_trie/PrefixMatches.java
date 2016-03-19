@@ -15,7 +15,17 @@ public class PrefixMatches {
 	// В словарь должны добавляться слова длиннее 2х символов. Предполагается
 	// что знаки пунктуации отсутствуют.
 	public int add(String... strings) {
-		return 0;
+		int countAdd = 0;
+		for(String strs: strings){
+			String[] words = strs.split("\\s+");
+			for(String word: words){
+				if(word.matches("[a-z]{3,}")){
+					countAdd++;
+					trie.add(new Tuple(word, word.length()));
+				}
+			}
+		}
+		return countAdd;
 	}
 
 	public PrefixMatches(Trie trie){

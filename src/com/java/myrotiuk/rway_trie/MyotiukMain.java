@@ -1,5 +1,7 @@
 package com.java.myrotiuk.rway_trie;
 
+import java.util.Arrays;
+
 public class MyotiukMain {
 	public static void main(String[] args) {
 
@@ -64,6 +66,21 @@ public class MyotiukMain {
 			System.out.println(r);
 		}
 		
+		String myStr = "hello  world git my lab 454";
+		PrefixMatches pm2 = new PrefixMatches(new MyTrie());
+		System.out.println(pm2.add(myStr));
 		
+		/*Test matcher
+		String[] words = myStr.split("\\s+");
+		System.out.println(Arrays.asList(words));
+		
+		int countAdd = 0;
+		for(String word: words){
+			if(word.matches("[a-z]{3,}")){
+				countAdd++;
+			}
+		}
+		System.out.println(countAdd);
+		*/
 	}
 }
