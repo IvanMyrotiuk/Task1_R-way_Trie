@@ -34,6 +34,8 @@ public class MyotiukMain {
 		strBuilder.append(c);
 		System.out.println(strBuilder.toString());
 		
+		trie.add(new Tuple("abcdlekljhn", 1));
+		trie.add(new Tuple("abcdlekjhn", 1));
 		trie.add(new Tuple("abcdle", 1));
 		trie.add(new Tuple("abcdol", 1));
 		trie.add(new Tuple("abcde", 1));
@@ -58,7 +60,7 @@ public class MyotiukMain {
 		}
 		
 		System.out.println("Iterable 2");
-		for(String r : pm.wordsWithPrefix("ab", 4)){
+		for(String r : pm.wordsWithPrefix("ab", 5)){
 			System.out.println(r);
 		}
 		

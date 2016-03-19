@@ -26,9 +26,6 @@ public class MyTrie implements Trie {
 		if (d == word.length()) {
 			x.weight = weight;
 			n++;
-			// if (x.weight == 0) {
-			// n++;
-			// }
 			return x;
 		}
 		char c = word.charAt(d);
@@ -60,9 +57,7 @@ public class MyTrie implements Trie {
 	}
 
 	private int getPosition(char c) {
-		if (c >= 65 && c <= 90) {
-			return c - 65;
-		} else if (c >= 'a' && c <= 'z') {//c >= 97 && c <= 122
+		if (c >= 'a' && c <= 'z') {// c >= 97 && c <= 122
 			return c - 'a';
 		}
 		return -1;
@@ -141,38 +136,27 @@ public class MyTrie implements Trie {
 	}
 
 	private void collect(Node x, StringBuilder prefix, Queue<String> results) {
-//		if (x == null) return;
-//		if (x.weight != 0) results.offer(prefix.toString());
-//		for (char c = 0; c < R; c++) {
-//			prefix.append((char) (c + 97));
-//			collect(x.next[c], prefix, results);
-//			prefix.deleteCharAt(prefix.length() - 1);
-//		}
-
-		if (x == null) return;
-		//Queue<String> myResults = new LinkedList<String>();
+		if (x == null)
+			return;
 		Queue<Node> myNodes = new LinkedList<Node>();
 		x.substr = prefix.toString();
 		myNodes.offer(x);
-		if (x.weight != 0) results.offer(prefix.toString());
-		while(!myNodes.isEmpty()){
+		if (x.weight != 0)
+			results.offer(prefix.toString());
+		while (!myNodes.isEmpty()) {
 			Node currentX = myNodes.remove();
 			for (char c = 0; c < R; c++) {
-				if(currentX.next[c] != null){
-					char charToAdd = (char) (c + 'a'); 
+				if (currentX.next[c] != null) {
+					char charToAdd = (char) (c + 'a');
 					currentX.next[c].substr = currentX.substr + charToAdd;
-					//System.out.println(currentX.next[c].substr);
-					if(currentX.next[c].weight != 0){ 
-						results.offer(currentX.next[c].substr);//prefix.append(c+'a').toString());
+					if (currentX.next[c].weight != 0) {
+						results.offer(currentX.next[c].substr);
 					}
 					myNodes.offer(currentX.next[c]);
 				}
-				
 			}
 		}
-		//results = myResults;
-		
-	}  
+	}
 
 	@Override
 	public int size() {
