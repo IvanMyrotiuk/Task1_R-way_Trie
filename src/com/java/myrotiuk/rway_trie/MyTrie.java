@@ -17,6 +17,9 @@ public class MyTrie implements Trie {
 
 	@Override
 	public void add(Tuple tuple) {
+		if(!tuple.getWord().matches("[a-z]+")){
+			throw new IllegalArgumentException("wrong word");
+		}
 		root = put(root, tuple.getWord(), tuple.getWeight(), 0);
 	}
 

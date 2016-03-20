@@ -1,5 +1,10 @@
 package com.java.myrotiuk.rway_trie;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class MyotiukMain {
@@ -70,17 +75,24 @@ public class MyotiukMain {
 		PrefixMatches pm2 = new PrefixMatches(new MyTrie());
 		System.out.println(pm2.add(myStr));
 		
-		/*Test matcher
-		String[] words = myStr.split("\\s+");
-		System.out.println(Arrays.asList(words));
-		
-		int countAdd = 0;
-		for(String word: words){
-			if(word.matches("[a-z]{3,}")){
-				countAdd++;
+		File file = new File("src/words-333333.txt");
+		StringBuilder words = new StringBuilder();
+		try(BufferedReader fr = new BufferedReader(new FileReader(file));){
+			String strLine = null;
+			while((strLine = fr.readLine()) != null){
+				words.append(strLine);
 			}
+		}catch (IOException e) {
+			e.printStackTrace();
 		}
-		System.out.println(countAdd);
-		*/
+		String finalWords = words.toString();
+		//System.out.println(finalWords);
+		
+		PrefixMatches pm3 = new PrefixMatches(new MyTrie());
+		System.out.println(pm3.add(finalWords));
+		for(String result: pm3.wordsWithPrefix("ha",78)){
+			System.out.println(result);
+		}
+		
 	}
 }
