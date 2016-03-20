@@ -40,7 +40,7 @@ public class TestMyTrie {
 		trie.add(new Tuple("girl", "girl".length()));
 		assertTrue(trie.contains("girl"));
 		assertTrue(trie.delete("girl"));
-		assertTrue(trie.contains("girl"));
+		assertFalse(trie.contains("girl"));
 	}
 
 	@Test

@@ -28,39 +28,12 @@ public class TestTestPrefixMatcher {
 	
 	@InjectMocks
 	private PrefixMatches pm;
-	
-//	@Mock
-//	private List list;
-	
-//	@BeforeClass
-//	public static void setUpBeforeClass() throws Exception {
-//	}
-//
-//	@AfterClass
-//	public static void tearDownAfterClass() throws Exception {
-//	}
-
-	@Before
-	public void setUp() throws Exception {
-		
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testAdd() {
-//		when(list.add(isA(Integer.class))).thenReturn(true);
-//		assertTrue(list.add(33));
 		String str = "do not wory be 	 happy";
 		pm.add(str);
 		verify(trie, times(3)).add(isA(Tuple.class));
-	}
-
-	@Test
-	public void testPrefixMatches() {
-//		assertTrue(list.add(33));
 	}
 
 	@Test
