@@ -6,14 +6,27 @@ import java.util.Queue;
 
 import javax.print.attribute.standard.RequestingUserName;
 
+/**
+ * Class<code> PrefixMatches</code> for the representation an instance that will handle your words
+ *
+ * @version 1.0
+ * @author Ivan Myrotiuk
+ * @since 18-03-2016
+ */
 public class PrefixMatches {
 	private Trie trie;
 
-	// ‘ормирует in-memory словарь слов. ћетод принимает слово, строку, массив
-	// слов/строк. ≈сли приходит строка, то она разбиваетс€ на слова по
-	// пробелам.
-	// ¬ словарь должны добавл€тьс€ слова длиннее 2х символов. ѕредполагаетс€
-	// что знаки пунктуации отсутствуют.
+	public PrefixMatches(Trie trie){
+		this.trie = trie;
+	}
+	
+	/**
+	 * Method for creating in-memory dictionary with words. Method can handle word, sentence,
+	 * array of words/sentences. If argument is a sentence then it is divided into words by spaces.
+	 * Words that contain more than two symbol will be added to in-memory dictionary. 
+	 * @param strings word, sentence, array of words/sentences without punctuation mark.
+	 * @return number of words that was added
+	 */
 	public int add(String... strings) {
 		int countAdd = 0;
 		for(String strs: strings){
@@ -27,47 +40,61 @@ public class PrefixMatches {
 		}
 		return countAdd;
 	}
-
-	public PrefixMatches(Trie trie){
-		this.trie = trie;
-	}
 	
-	// есть ли слово в словаре
+    /**
+     * Method for checking if there are such word in dictionary
+     * @param word is a word to check 
+     * @return true if there is such otherwise false
+     */
 	public boolean contains(String word) {
 		return trie.contains(word);
 	}
 
-	// удал€ет слово из словар€
+    /**
+     * Method for deleting specific word
+     * @param word is a word to delete
+     * @return true if deletion was success otherwise false
+     */
 	public boolean delete(String word) {
 		return trie.delete(word);
 	}
 
-	// к-во слов в словаре
+    /**
+     * Method for getting number of words that in our data structure
+     * @return size of our data structure
+     */
 	public int size() {
 		return trie.size();
 	}
 
-	// если введенный pref длиннее или равен 2м символам, то возвращает набор
-	// слов k разных длин начина€ с минимальной, и начинающихс€ с данного
-	// префикса pref.
-	// ѕример, даны слова следующей длины и pref='abc':
-	// abc 3
-	// abcd 4
-	// abce 4
-	// abcde 5
-	// abcdef 6
-	// - при k=1 возвращаютс€ 'abc'
-	// - при k=2 возвращаютс€ 'abc', 'abcd', 'abce'
-	// - при k=3 возвращаютс€ 'abc', 'abcd', 'abce', 'abcde'
-	// - при k=4 возвращаютс€ 'abc', 'abcd', 'abce', 'abcde', 'abcdef'
+	/**
+	 * Method for getting words with prefix that contain 2 or more symbol will return k different lengths
+	 * that start from minimal and from current prefix.
+	 * For instance: there are words and their length and pref = 'abc'
+	 * abc 3
+	 * abcd 4
+	 * abce 4
+	 * abcde 5
+	 * abcdef 6
+	 * - when k=1 will be return 'abc'
+	 * - when k=2  will be return 'abc', 'abcd', 'abce'
+	 * - when k=3  will be return 'abc', 'abcd', 'abce', 'abcde'
+	 * - when k=4  will be return 'abc', 'abcd', 'abce', 'abcde', 'abcdef' 
+	 * @param pref specific prefix
+	 * @param k number of lengths
+	 * @return words with prefix for lengths 
+	 */
 	public Iterable<String> wordsWithPrefix(String pref, int k) {
 		checkLength(pref);
 		return getWordsWithPrefix(pref, k);
 	}
 
-	// если введенный pref длиннее или равен 2м символам, то возвращает набор
-	// слов k=3 разных длин начина€ с минимальной, и начинающихс€ с данного
-	// префикса pref.
+	/**
+	 * Method for getting words with prefix that contain 2 or more symbol will return k=3 different lengths
+	 * that start from minimal and from current prefix.
+	 * @param pref specific prefix
+	 * @return words with prefix for lengths
+	 */
 	public Iterable<String> wordsWithPrefix(String pref){
 		checkLength(pref);
 		return getWordsWithPrefix(pref, 3);
@@ -117,5 +144,4 @@ public class PrefixMatches {
 			}
 		};
 	}
-
 }

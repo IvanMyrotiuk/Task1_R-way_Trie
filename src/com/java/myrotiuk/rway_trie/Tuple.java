@@ -1,5 +1,12 @@
 package com.java.myrotiuk.rway_trie;
 
+/**
+ * Class<code> Tuple</code> for creating box for word and weight
+ *
+ * @version 1.0
+ * @author Ivan Myrotiuk
+ * @since 18-03-2016
+ */
 public class Tuple {
 	private String word;
 	private int weight;

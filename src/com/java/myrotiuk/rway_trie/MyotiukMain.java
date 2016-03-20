@@ -7,6 +7,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * Class<code> MyrotiukMain</code> consists <i>main()</i> method where is loaded logic
+ *
+ * @version 1.0
+ * @author Ivan Myrotiuk
+ * @since 18-03-2016
+ */
 public class MyotiukMain {
 	public static void main(String[] args) {
 
@@ -89,8 +96,8 @@ public class MyotiukMain {
 		//System.out.println(finalWords);
 		
 		PrefixMatches pm3 = new PrefixMatches(new MyTrie());
-		System.out.println(pm3.add(finalWords));
-		for(String result: pm3.wordsWithPrefix("ha",78)){
+		System.out.println("number words that was added to our dictionary:"+pm3.add(finalWords));
+		for(String result: pm3.wordsWithPrefix("ha",77)){
 			System.out.println(result);
 		}
 		
